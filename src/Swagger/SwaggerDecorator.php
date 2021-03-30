@@ -20,6 +20,7 @@ final class SwaggerDecorator implements NormalizerInterface
 
     public function normalize($object, string $format = null, array $context = [])
     {
+
         $docs = $this->decorated->normalize($object, $format, $context);
 
         $docs['components']['schemas']['Token'] = [
@@ -54,7 +55,8 @@ final class SwaggerDecorator implements NormalizerInterface
                         'requestBody' => [
                             'description' => 'Create new JWT Token',
                             'content' => [
-                                'application/json' => [
+                            //    'application/json' => [
+                                'application/x-www-form-urlencoded' => [
                                     'schema' => [
                                         '$ref' => '#/components/schemas/Credentials',
                                     ],
@@ -65,7 +67,7 @@ final class SwaggerDecorator implements NormalizerInterface
                             Response::HTTP_OK => [
                                 'description' => 'Get JWT token',
                                 'content' => [
-                                    'application/json' => [
+                                    'application/x-www-form-urlencoded' => [
                                         'schema' => [
                                             '$ref' => '#/components/schemas/Token',
                                         ],

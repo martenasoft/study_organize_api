@@ -3,23 +3,56 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class CommonSubscriber implements EventSubscriberInterface
 {
+    private UserPasswordEncoderInterface $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
     public static function getSubscribedEvents()
     {
         return [
-            RequestEvent::class => ['createUser', EventPriorities::POST_READ]
+            KernelEvents::VIEW => ['onPreSerialize', EventPriorities::PRE_WRITE],
         ];
     }
 
-    public function createUser(RequestEvent $event): void
+    public function onPreSerialize(ViewEvent $event): void
     {
-        dump($event); die;
+        $controllerResult = $event->getControllerResult();
+        $request = $event->getRequest();
 
+        if ($controllerResult instanceof User) {
+            $this->createUser($controllerResult, $request);
+        }
+
+       /* */
+
+     /*   var_dump($controllerResult);
+        die;*/
     }
+
+    private function createUser(User $user, Request $request): void
+    {
+        if ($request->getMethod() !== Request::METHOD_POST) {
+            return;
+        }
+
+        $user->setPassword(
+            $this->passwordEncoder->encodePassword(
+                $user,
+                $user->getPlainPassword()
+            )
+        );
+    }
+
 }

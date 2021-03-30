@@ -1,0 +1,27 @@
+{
+  "email": "user8@user.com",
+  "password": "123123"
+}
+
+{
+  "username": "user8@user.com",
+  "password": "123123"
+}
+
+
+
+
+curl -X POST "https://127.0.0.1:8000/login" -H  "Content-Type: application/x-www-form-urlencoded" -d "{\"email\":\"user8@user.com\",\"password\":\"123123\"}"
+
+curl -X POST "https://127.0.0.1:8000/api/login_check" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"username\":\"user8@user.com\",\"password\":\"123123\"}"
+
+curl -X GET "https://study-organize-api.com.wip/api/users/11" -H  "accept: application/json" -H  "Authorization: d6a9a18b75ab608e7d504574b3725b87c627e40cfad7a3f4913907dce507a0bc91f2b8bf03c2cba1761f48ab1e6b91c2d332031a937a3eb5be253bea8fcbbf3b"
+
+curl -X GET "https://127.0.0.1:8000/api/users/11" -H  "accept: application/ld+json" -H  "Authorization: Bearer d6a9a18b75ab608e7d504574b3725b87c627e40cfad7a3f4913907dce507a0bc91f2b8bf03c2cba1761f48ab1e6b91c2d332031a937a3eb5be253bea8fcbbf3b"
+
+curl -X GET "https://127.0.0.1:8000/api" -H "Authorization: Bearer d6a9a18b75ab608e7d504574b3725b87c627e40cfad7a3f4913907dce507a0bc91f2b8bf03c2cba1761f48ab1e6b91c2d332031a937a3eb5be253bea8fcbbf3b"
+curl -X GET "https://study-organize-api.com.wip/api" -H "Authorization: Bearer d6a9a18b75ab608e7d504574b3725b87c627e40cfad7a3f4913907dce507a0bc91f2b8bf03c2cba1761f48ab1e6b91c2d332031a937a3eb5be253bea8fcbbf3b"
+
+curl -X GET "https://127.0.0.1:8000/api/login_check" -H  "accept: application/json" -H  "Authorization: Bearer d6a9a18b75ab608e7d504574b3725b87c627e40cfad7a3f4913907dce507a0bc91f2b8bf03c2cba1761f48ab1e6b91c2d332031a937a3eb5be253bea8fcbbf3b"
+
+curl -X GET "https://127.0.0.1:8000/api/users/11" -H  "accept: application/json" -H  "Authorization: Bearer ffc000fd020960022e196cafd7138bcd9e2058b084d2a50959adcae3ffe67d26be1960cc1d7096ec11482db01d40eb01a96de7861a10b953d7053cca11f460bf"
