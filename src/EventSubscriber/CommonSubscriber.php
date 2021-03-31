@@ -34,11 +34,6 @@ class CommonSubscriber implements EventSubscriberInterface
         if ($controllerResult instanceof User) {
             $this->createUser($controllerResult, $request);
         }
-
-       /* */
-
-     /*   var_dump($controllerResult);
-        die;*/
     }
 
     private function createUser(User $user, Request $request): void
