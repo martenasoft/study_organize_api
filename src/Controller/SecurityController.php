@@ -26,47 +26,6 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/register", name="app_register", methods={"POST"})
-     */
-    public function register(Request $request, EntityManagerInterface $entityManager, JWTEncoderInterface $encoder): Response
-    {
-
-        $post = json_decode($request->getContent(), true);
-
-        $user = new User();
-        $user
-            ->setEmail($post['email'])
-            ->setPassword($post['password'])
-            ->setPlainPassword($post['plainPassword'])
-        ;
-
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-
-        return $this->json([
-            'token' => $encoder->encode(['username' => $user->getUsername()])
-        ]);
-    }
-
-
-
-
-   /* public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }*/
-
-    /**
      * @Route("/logout", name="app_logout")
      */
     public function logout()
