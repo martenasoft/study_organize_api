@@ -42,11 +42,7 @@ router.beforeEach((to, from, next) => {
   //  const user = store.getters;
     const notRedirect = ["Registration", "Login"];
 
-
-    console.log(
-        notRedirect.includes(router.currentRoute),
-        notRedirect.includes(from.name)
-    );
+    const user = null;
 
     if (user === null && (!notRedirect.includes(router.currentRoute.name) && !notRedirect.includes(from.name))) {
       //  next({name: 'Login'});

@@ -23,22 +23,25 @@ export default {
             const posts = await response.json();
             Vue.$cookies.set('token', posts.token);
         },
-        async userLogin({commit, state}) {
+        async userLogin(ctx) {
 
             const requestOptions = {
                 method: "POST",
                 headers: {
+                    "accept" : "application/json",
                     "Content-Type": "application/json",
                     //    "Access-Control-Allow-Origin" : "https://study-theme-symfony.wip"
                 },
                 body: JSON.stringify({
-                    username: state.loginData.username,
-                    password: state.loginData.password
+                    username: ctx.getters.loginData.username,
+                    password: ctx.getters.loginData.password
                 })
             };
 
-            const response = await fetch(config.baseUrl + '/api/login_check', requestOptions)
-                .then(response => response.json());
+            const response = await fetch(config.baseUrl + '/api/login_check', requestOptions);
+            const user = await response.json();
+            Vue.$cookies.set('token', user.token);
+            ctx.commit('setUserToken', user.token);
         },
         async fetchUser(ctx) {
 
