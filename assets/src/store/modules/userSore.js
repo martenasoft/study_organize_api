@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import config from './../../config';
+import router from "../../router";
 
 export default {
     actions: {
@@ -42,23 +43,13 @@ export default {
             const user = await response.json();
             Vue.$cookies.set('token', user.token);
             ctx.commit('setUserToken', user.token);
+
+            if (user.token !== null) {
+                await ctx.getters.fetchUser;
+                router.push('/')
+            }
         },
-        async fetchUser(ctx) {
 
-            const requestOptions = {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization" : 'Bearer ' + Vue.$cookies.get('token')
-                }
-            };
-
-            const response = await fetch(config.baseUrl + '/api/get-user', requestOptions);
-
-            const user = await response.json();
-            ctx.commit('updateUser', user);
-
-        },
     },
     mutations: {
 
@@ -92,6 +83,24 @@ export default {
     },
 
     getters: {
+
+        async fetchUser(state) {
+
+            const requestOptions = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : 'Bearer ' + Vue.$cookies.get('token')
+                }
+            };
+
+            const response = await fetch(config.baseUrl + '/api/get-user', requestOptions);
+            const user = await response.json();
+
+            state.user = user;
+
+        },
+
         getUserToken(state) {
             const token =  state.userToken;
             return token === null ? Vue.$cookies.get('token') : token;
@@ -103,7 +112,6 @@ export default {
             return state.loginData;
         },
         user(state) {
-
             return state.user;
         }
     },

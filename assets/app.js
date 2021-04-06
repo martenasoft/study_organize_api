@@ -29,6 +29,9 @@ import './js/jquery.flot.resize.min.js';
 import './js/ace-elements.min.js';
 import './js/ace.min.js';
 
+//import './js/bootstrap-datetimepicker.min.js';
+import './js/bootstrap-datepicker.min.js';
+
 import './bootstrap';
 
 import Vue from 'vue';

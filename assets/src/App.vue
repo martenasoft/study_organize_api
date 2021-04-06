@@ -21,9 +21,9 @@ export default {
 
 
   mounted() {
-    console.log(this.user)
+
     if (this.user === null) {
-      this.fetchUser();
+    //  this.fetchUser();
     }
 
    /* if (this.user === null) {

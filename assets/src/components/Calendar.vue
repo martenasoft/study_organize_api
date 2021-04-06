@@ -1,63 +1,109 @@
 <template>
-  <div class="row">
+  <div class="row-fluid">
     <div class="col-xs-12">
       <!-- PAGE CONTENT BEGINS -->
       <div class="row">
         <div class="col-sm-9">
           <div class="space"></div>
 
-          <FullCalendar :options="calendarOptions" />
+          <FullCalendar :options="calendarOptions"/>
         </div>
-
         <div class="col-sm-3">
-          <div class="widget-box transparent">
-            <div class="widget-header">
-              <h4>Draggable events</h4>
-            </div>
+          <div class="widget-body">
+            <div class="widget-main no-padding">
+              <div id="external-events">
 
-            <div class="widget-body">
-              <div class="widget-main no-padding">
-                <div id="external-events">
-                  <div class="external-event label-grey" data-class="label-grey">
-                    <i class="ace-icon fa fa-arrows"></i>
-                    My Event 1
+                <div class="widget-box">
+                  <div class="widget-header">
+                    <h4 class="widget-title">Date Picker</h4>
+
+                    <span class="widget-toolbar">
+														<a href="#" data-action="settings">
+															<i class="ace-icon fa fa-cog"></i>
+														</a>
+
+														<a href="#" data-action="reload">
+															<i class="ace-icon fa fa-refresh"></i>
+														</a>
+
+														<a href="#" data-action="collapse">
+															<i class="ace-icon fa fa-chevron-up"></i>
+														</a>
+
+														<a href="#" data-action="close">
+															<i class="ace-icon fa fa-times"></i>
+														</a>
+													</span>
                   </div>
 
-                  <div class="external-event label-success" data-class="label-success">
-                    <i class="ace-icon fa fa-arrows"></i>
-                    My Event 2
-                  </div>
+                  <div class="widget-body">
 
-                  <div class="external-event label-danger" data-class="label-danger">
-                    <i class="ace-icon fa fa-arrows"></i>
-                    My Event 3
-                  </div>
+                    <div class="widget-main">
+                      <label for="id-date-picker-1">Title</label>
 
-                  <div class="external-event label-purple" data-class="label-purple">
-                    <i class="ace-icon fa fa-arrows"></i>
-                    My Event 4
-                  </div>
+                      <div class="row">
+                        <div class="col-xs-8 col-sm-11">
+                          <div class="input-group">
+                            <input v-model="calendarItem.title" class="form-control" id="title" type="text"/>
+                          </div>
+                        </div>
+                      </div>
 
-                  <div class="external-event label-yellow" data-class="label-yellow">
-                    <i class="ace-icon fa fa-arrows"></i>
-                    My Event 5
-                  </div>
+                    </div>
 
-                  <div class="external-event label-pink" data-class="label-pink">
-                    <i class="ace-icon fa fa-arrows"></i>
-                    My Event 6
-                  </div>
+                    <div class="widget-main">
+                      <label for="id-date-picker-1">Start</label>
+                      <div class="row">
+                        <div class="col-xs-8 col-sm-11">
+                          <div class="input-group">
+                            <input v-model="calendarItem.start" class="form-control date-picker"
+                                   id="id-date-picker-1"
+                                   type="text"
+                                   data-date-format="yyyy-mm-dd"/>
+                            <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                          </div>
+                        </div>
+                      </div>
 
-                  <div class="external-event label-info" data-class="label-info">
-                    <i class="ace-icon fa fa-arrows"></i>
-                    My Event 7
-                  </div>
+                    </div>
 
-                  <label>
-                    <input type="checkbox" class="ace ace-checkbox" id="drop-remove" />
-                    <span class="lbl"> Remove after drop</span>
-                  </label>
+                    <div class="widget-main">
+                      <label for="id-date-picker-1">End</label>
+
+                      <div class="row">
+                        <div class="col-xs-8 col-sm-11">
+                          <div class="input-group">
+                            <input v-model="calendarItem.end" class="form-control date-picker" id="id-date-picker-2"
+                                   type="text"
+                                   data-date-format="yyyy-mm-dd"/>
+                            <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="widget-main">
+
+
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-11">
+                          <div class="input-group">
+                            <label for="id-date-picker-1">About</label>
+                            <div class="row">
+                              <div class="col-xs-12 col-sm-11">
+
+                                  <textarea v-model="calendarItem.about" id="about" class="autosize-transition form-control"></textarea>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -74,38 +120,76 @@
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import {mapGetters, mapActions} from 'vuex';
+
+//import './../../js/bootstrap-datetimepicker.min.js';
 
 export default {
-name: "Calendar",
+  name: "Calendar",
+  async mounted() {
+    $(function () {
+
+      $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true
+      });
+    });
+
+  },
   components: {
     FullCalendar // make the <FullCalendar> tag available
   },
+  computed: mapGetters(["calendarItem"]),
   data() {
     return {
       calendarOptions: {
-        plugins: [ dayGridPlugin, interactionPlugin ],
+        plugins: [dayGridPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         dateClick: this.handleDateClick,
         select: this.handleSelect,
+        eventClick: this.eventClick,
+        updateEvent: this.updateEvent,
         selectable: true,
         unselectAuto: true,
         events: [
-          { title: 'event 1-4', start: '2021-04-01', end: '2021-04-04'},
-          { title: 'event 1', date: '2021-04-01' },
-          { title: 'event 2', date: '2021-04-02' }
+          {id: 1, title: 'event 1-4', start: '2021-04-01', end: '2021-04-04'},
+          {id: 2, title: 'event 1', date: '2021-04-01'},
+          {id: 3, title: 'event 2', date: '2021-04-02'}
         ]
       }
     }
   },
   methods: {
-    handleSelect: function(start, end, allDay) {
-      console.log(start, end, allDay);
-    //  this.$refs.
 
+    handleSelect: function (info) {
+      const item = {
+        title: '',
+        start: info.start,
+        end: info.end
+      };
+      this.$store.commit("updateItem", item);
+    },
+    eventClick: function (info) {
+      const item = {
+        title: info.event.title,
+        start: info.event.start,
+        end: info.event.end
+      };
+      info.event.setStart(info.event.start);
+      this.$store.commit("updateItem", item);
+
+    //  info.setStart(info.event.start);
+      console.log(info);
+      //  this.$store.dispatch('fetchItem', info.event.title);
 
     },
-    handleDateClick: function(arg) {
-      alert('date click! ' + arg.dateStr);
+    handleDateClick: function (info) {
+      const item = {
+        title: '',
+        start: info.date,
+        end: info.date
+      };
+      this.$store.commit("updateItem", item);
     }
   }
 }

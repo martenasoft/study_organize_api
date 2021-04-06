@@ -42,13 +42,13 @@ router.beforeEach((to, from, next) => {
   //  const user = store.getters;
     const notRedirect = ["Registration", "Login"];
 
-    const user = null;
+    const user = store.getters.user;
 
     if (user === null && (!notRedirect.includes(router.currentRoute.name) && !notRedirect.includes(from.name))) {
       //  next({name: 'Login'});
     }
 
-    //console.log(store.getters.getUserToken)
+    //
 
    // console.log(router.currentRoute)
     //console.log(router.currentRoute)
