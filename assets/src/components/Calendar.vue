@@ -6,7 +6,7 @@
         <div class="col-sm-9">
           <div class="space"></div>
 
-          <FullCalendar :options="calendarOptions"/>
+          <FullCalendar :options="calendarOptions" ref="calendar" />
         </div>
         <div class="col-sm-3">
           <div class="widget-body">
@@ -137,9 +137,6 @@ export default {
   name: "Calendar",
   async mounted() {
 
-
-
-
       $('.date-picker').datepicker({
         autoclose: true,
         todayHighlight: true
@@ -152,6 +149,7 @@ export default {
   computed: mapGetters(["calendarItem"]),
   data() {
     return {
+
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
@@ -180,12 +178,31 @@ export default {
       //console.log(items);
       //return items;
     },
-    handleSelect: function (info) {
+    handleSelect: function (info, arg) {
       const item = {
         title: '',
         start: info.start,
         end: info.end
       };
+
+     // console.log(this.$refs);
+
+    //  let calendarApi = this.$refs.calendar;
+
+      this.$refs.calendar.getApi()
+      .addEvent(
+          {
+            title: 'new',
+            start: info.start,
+            end: info.end,
+            //allDay: allDay,
+            className: 'label-info'
+          },
+          true // make the event "stick"
+      );
+
+
+      //info.addEvent(item)
       this.$store.commit("updateItem", item);
     },
     eventContent: function (info) {
@@ -215,6 +232,7 @@ export default {
         start: info.date,
         end: info.date
       };
+
       this.$store.commit("updateItem", item);
     }
   }

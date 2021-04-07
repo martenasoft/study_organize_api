@@ -16,7 +16,10 @@
 import TimelineBlockItem from "./TimelineBlockItem"
 
 export default {
-name: "TimelineBlock"
+name: "TimelineBlock",
+  components: {
+    TimelineBlockItem
+  }
 }
 </script>
 

@@ -4,9 +4,9 @@
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div v-if="timeline.length > 0">
           <TimelineBlock
-              v-for="timelineBlock in timeline"
-              v-bind:key="timelineBlock.id",
-              v-bind:timelineBlock="timelineBlock",
+              v-for="item in timeline"
+              v-bind:key="item.id"
+              v-bind:item="item"
 
           />
         </div>
@@ -38,9 +38,7 @@ export default {
     };
   },
   components: {TimelineBlock},
-  comments: {
-    TimelineBlock
-  }
+
 }
 </script>
 

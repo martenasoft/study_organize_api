@@ -66,7 +66,7 @@
 export default {
   name: "TimelineBlockItem",
   props: {
-    timelineBlock: {
+    item: {
       type: Object,
       required: true
     }
