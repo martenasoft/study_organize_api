@@ -8,11 +8,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Type as JSMType;
 
 /**
  * @ORM\Entity(repositoryClass=CalendarRepository::class)
  * @ApiResource(
- *     normalizationContext={"groups"={"read"}},
+ *     normalizationContext={"groups"={"read"}, "datetime_format" = "Y-m-d"},
  *     denormalizationContext={"groups"={"write"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={"title"})
@@ -34,20 +35,21 @@ class Calendar
     private $title;
 
     /**
+     * @JSMType("Date<Y-m-d>")
      * @Groups({"read", "write"})
      * @ORM\Column(type="date")
      */
-    private $startDate;
+    private $start;
 
     /**
      * @Groups({"read", "write"})
      * @ORM\Column(type="date")
      */
-    private $endDate;
+    private $end;
 
     /**
      * @Groups({"read", "write"})
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $about;
 
@@ -68,26 +70,26 @@ class Calendar
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeInterface
+    public function getStart(): ?\DateTimeInterface
     {
-        return $this->startDate;
+        return $this->start;
     }
 
-    public function setStartDate(\DateTimeInterface $startDate): self
+    public function setStart(\DateTimeInterface $start): self
     {
-        $this->startDate = $startDate;
+        $this->start = $start;
 
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeInterface
+    public function getEnd(): ?\DateTimeInterface
     {
-        return $this->endDate;
+        return $this->end;
     }
 
-    public function setEndDate(\DateTimeInterface $endDate): self
+    public function seEnd(\DateTimeInterface $end): self
     {
-        $this->endDate = $endDate;
+        $this->end = $end;
 
         return $this;
     }

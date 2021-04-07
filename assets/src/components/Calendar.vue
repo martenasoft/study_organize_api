@@ -83,14 +83,12 @@
 
                     </div>
                     <div class="widget-main">
-
-
                       <div class="row">
-                        <div class="col-xs-12 col-sm-11">
+                        <div class="col-xs-12 col-sm-12">
                           <div class="input-group">
-                            <label for="id-date-picker-1">About</label>
+                            <label for="about">About</label>
                             <div class="row">
-                              <div class="col-xs-12 col-sm-11">
+                              <div class="col-xs-12 col-sm-12">
 
                                   <textarea v-model="calendarItem.about" id="about" class="autosize-transition form-control"></textarea>
 
@@ -101,6 +99,16 @@
                       </div>
 
                     </div>
+                    <div class="space"></div>
+                    <div class="clearfix">
+
+                      <button  v-on:click="submitItem()" type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                        <i class="ace-icon fa fa-key"></i>
+                        <span class="bigger-110">Save</span>
+                      </button>
+                    </div>
+
+                    <div class="space-4"></div>
                   </div>
                 </div>
 
@@ -117,6 +125,7 @@
 
 <script>
 
+
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
@@ -127,13 +136,14 @@ import {mapGetters, mapActions} from 'vuex';
 export default {
   name: "Calendar",
   async mounted() {
-    $(function () {
+
+
+
 
       $('.date-picker').datepicker({
         autoclose: true,
         todayHighlight: true
       });
-    });
 
   },
   components: {
@@ -148,19 +158,28 @@ export default {
         dateClick: this.handleDateClick,
         select: this.handleSelect,
         eventClick: this.eventClick,
+        eventContent: this.eventContent,
         updateEvent: this.updateEvent,
         selectable: true,
         unselectAuto: true,
-        events: [
+       events:  this.events,
+       /* events: [
           {id: 1, title: 'event 1-4', start: '2021-04-01', end: '2021-04-04'},
           {id: 2, title: 'event 1', date: '2021-04-01'},
           {id: 3, title: 'event 2', date: '2021-04-02'}
-        ]
+        ]*/
       }
     }
   },
   methods: {
+    ...mapActions(['fetchItems', 'fetchItem', 'submitItem']),
 
+    events: function (info, successCallback, failureCallback) {
+      this.fetchItems(successCallback);
+    //  const items = this.$store.getters.calendarItems;
+      //console.log(items);
+      //return items;
+    },
     handleSelect: function (info) {
       const item = {
         title: '',
@@ -169,17 +188,24 @@ export default {
       };
       this.$store.commit("updateItem", item);
     },
+    eventContent: function (info) {
+      return {html: "<div id='"+info.event.id+"'>"+info.event.title+"</div>"};
+    },
     eventClick: function (info) {
+
       const item = {
+        id: info.event.id,
         title: info.event.title,
         start: info.event.start,
-        end: info.event.end
+        end: info.event.end,
+        obj: info
       };
+     // console.log(item)
       info.event.setStart(info.event.start);
       this.$store.commit("updateItem", item);
 
     //  info.setStart(info.event.start);
-      console.log(info);
+
       //  this.$store.dispatch('fetchItem', info.event.title);
 
     },
