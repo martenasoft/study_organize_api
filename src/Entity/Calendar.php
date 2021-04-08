@@ -14,7 +14,7 @@ use JMS\Serializer\Annotation\Type as JSMType;
  * @ORM\Entity(repositoryClass=CalendarRepository::class)
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "datetime_format" = "Y-m-d"},
- *     denormalizationContext={"groups"={"write"}}
+ *     denormalizationContext={"groups"={"write"}, "datetime_format" = "Y-m-d"}
  * )
  * @ApiFilter(SearchFilter::class, properties={"title"})
  */
@@ -35,7 +35,6 @@ class Calendar
     private $title;
 
     /**
-     * @JSMType("Date<Y-m-d>")
      * @Groups({"read", "write"})
      * @ORM\Column(type="date")
      */
@@ -87,7 +86,7 @@ class Calendar
         return $this->end;
     }
 
-    public function seEnd(\DateTimeInterface $end): self
+    public function setEnd(\DateTimeInterface $end): self
     {
         $this->end = $end;
 

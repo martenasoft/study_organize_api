@@ -1,15 +1,17 @@
 <template>
   <div class="timeline-item clearfix">
+<!--
     <div class="timeline-info">
       <img alt="Susan't Avatar" src="assets/images/avatars/avatar1.png"/>
       <span class="label label-info label-sm">16:22</span>
     </div>
+-->
 
     <div class="widget-box transparent">
       <div class="widget-header widget-header-small">
         <h5 class="widget-title smaller">
-          <a href="#" class="blue">{{ title }}</a>
-          <span class="grey">reviewed a product</span>
+          <a href="#" class="blue"></a>
+          <span class="grey">Title</span>
         </h5>
 
         <span class="widget-toolbar no-border">
@@ -64,13 +66,7 @@
 
 <script>
 export default {
-  name: "TimelineBlockItem",
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
-  }
+name: "TimelineItem"
 }
 </script>
 
