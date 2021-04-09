@@ -1,15 +1,17 @@
 <template>
-  <div class="timeline-item clearfix">
+
+<!--
     <div class="timeline-info">
       <img alt="Susan't Avatar" src="assets/images/avatars/avatar1.png"/>
       <span class="label label-info label-sm">16:22</span>
     </div>
+-->
 
     <div class="widget-box transparent">
       <div class="widget-header widget-header-small">
         <h5 class="widget-title smaller">
           <a href="#" class="blue"></a>
-          <span class="grey">{{ item.title }}</span>
+          <span class="grey"> title</span>
         </h5>
 
         <span class="widget-toolbar no-border">
@@ -59,7 +61,7 @@
         </div>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>

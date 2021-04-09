@@ -1,16 +1,24 @@
 <template>
-  <div v-if="index == 0"  class="timeline-container">
-    <div v-if="index == 0" class="timeline-label">
+  <div v-if="index == 0" class="timeline-container">
+    <div class="timeline-label">
 													<span class="label label-primary arrowed-in-right label-lg">
 														<b>  {{ item.start }}</b>
 													</span>
+      
     </div>
-
-    <div  class="timeline-items">
-      <TimelineItem />
-    </div><!-- /.timeline-items -->
+    <div class="timeline-items">
+      <div class="timeline-item clearfix">
+        <TimelineItem v-bind:item="item"/>
+      </div>
+    </div>
   </div>
-  <TimelineItem v-else/>
+  <div v-else>
+    <div class="timeline-item clearfix">
+      <TimelineItem v-bind:item="item"/>
+    </div>
+  </div>
+
+
 </template>
 
 <script>

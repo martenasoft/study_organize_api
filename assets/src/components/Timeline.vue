@@ -25,7 +25,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: mapGetters(["items"]),
-  methods: mapActions(["fetch"]),
+ // methods: mapActions(["fetch"]),
   name: "Timeline",
   components: {TimelineBlock},
   mounted() {
