@@ -5,10 +5,12 @@ namespace App\Entity;
 use App\Repository\CalendarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type as JSMType;
+use App\Filter\CalendarFilter;
 
 /**
  * @ORM\Entity(repositoryClass=CalendarRepository::class)
@@ -16,12 +18,12 @@ use JMS\Serializer\Annotation\Type as JSMType;
  *     normalizationContext={"groups"={"read"}, "datetime_format" = "Y-m-d"},
  *     denormalizationContext={"groups"={"write"}, "datetime_format" = "Y-m-d"}
  * )
- * @ApiFilter(SearchFilter::class, properties={"title"})
+ * @ApiFilter(CalendarFilter::class, properties={"start"})
  */
 class Calendar
 {
     /**
-     *  @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
