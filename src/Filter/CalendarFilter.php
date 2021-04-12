@@ -26,10 +26,8 @@ class CalendarFilter extends AbstractContextAwareFilter
 
         $parameterName = $queryNameGenerator->generateParameterName($property);
 
-
-
         $queryBuilder
-            ->andWhere("o.start>=:$parameterName AND (o.end=:null OR o.end <= :$parameterName)")
+            ->andWhere("o.start1>=:$parameterName AND (o.end=:null OR o.end <= :$parameterName)")
             ->setParameter($parameterName, $value)
             ->setParameter('null', 'NULL')
             ->orderBy("o.start", "DESC")

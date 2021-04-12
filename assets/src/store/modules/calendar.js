@@ -6,8 +6,9 @@ export default {
         async fetchItems(ctx, successCallback) {
 
             const res = await fetch(
-                "/api/calendars/",
+                "/api/calendars",
                 {
+                    "order[start]": "desc",
                     headers: {
                         "accept" : "application/json",
                         "Content-Type": "application/json",

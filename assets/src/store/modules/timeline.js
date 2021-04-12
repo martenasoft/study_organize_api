@@ -5,7 +5,7 @@ export default {
         async fetch(ctx, start) {
 
             const res = await fetch(
-                "/api/calendars/" + (start ? '?start='+start : ''),
+                "/api/calendars?order[start]=desc" + (start ? '&start='+start : ''),
                 {
                     headers: {
                         "accept" : "application/json",

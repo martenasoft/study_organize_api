@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CalendarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -18,7 +19,9 @@ use App\Filter\CalendarFilter;
  *     normalizationContext={"groups"={"read"}, "datetime_format" = "Y-m-d"},
  *     denormalizationContext={"groups"={"write"}, "datetime_format" = "Y-m-d"}
  * )
+ *
  * @ApiFilter(CalendarFilter::class, properties={"start"})
+ * @ApiFilter(OrderFilter::class, properties={"start":"DESC"})
  */
 class Calendar
 {

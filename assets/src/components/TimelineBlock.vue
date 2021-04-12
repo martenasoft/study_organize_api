@@ -1,7 +1,9 @@
 <template>
   <div v-if="items.length > 0">
 
-    <div v-for="item in items" class="timeline-container" v-if='expandItem(item.start, "date")'>
+
+
+    <div v-for="item in items" class="timeline-container" v-if='expandItem(item.start, "date", null)'>
       <div class="timeline-label">
         <span class="label label-primary arrowed-in-right label-lg">
           <b>  {{ item.start }}</b>
@@ -12,7 +14,7 @@
           v-for="item_ in items"
           v-bind:item="item_"
           v-bind:key="item_.id"
-          v-if='expandItem(item_.id, "item")'
+          v-if='expandItem(item_, "item", item.start)'
       />
 
     </div>
@@ -40,38 +42,20 @@ export default {
   computed: mapGetters(["items"]),
   methods: {
     ...mapActions(["fetch"]),
-    expandItem: function (data, varName) {
+    expandItem: function (data, varName, uDate) {
       let ret = false;
-      let start = null;
-      let end = null;
 
       switch (varName) {
         case 'item':
 
+          let startTime = (new Date(data.start)).getTime();
+          let uTime = (new Date(uDate)).getTime();
+          ret = startTime == uTime
 
-
-          ret = !showedItem.includes(data) /*|| showedDate.find(element => (new Date(element)).getTime() <= (new Date(data.start)).getTime() )*/;
-          if (ret) {
-            showedItem.push(data);
-          }
           break;
 
         case 'date':
           ret = !showedDate.includes(data);
-          start = data.start;
-          end = data.end;
-
-          if (start !== null && end !== null) {
-            const start = (new Date(data.start)).getTime();
-            const end = (new Date(data.end)).getTime();
-
-            console.log({
-              start: start,
-              end: end
-            });
-          }
-
-
           if (ret) {
             showedDate.push(data);
           }
